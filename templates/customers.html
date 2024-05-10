@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<head>
+    <title>Our Beloved Customers</title>
+</head>
+<body>
+<p>Average Length of Stay: {{ query3 }}  </p>
+
+<table>
+    <tr>
+        <th>Our Top 10 Bag Getters</th>
+        <th>Bag Getter ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Bag Getting Organization</th>
+        <th>Total Bag</th>
+    </tr>
+    {% for row in query2 %}
+        <tr>
+            {% for field in row %}
+                <td>{{ field }} </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+
+</body>
+{% endblock %}

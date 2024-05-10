@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Adjust canvas size and center content */
+        .chart {
+            width: 400px; /* Set desired width */
+            height: 400px; /* Set desired height */
+            margin: auto; /* Center horizontally */
+        }
+
+        /* Center the div content and provide spacing */
+        div {
+            text-align: center; /* Center text inside div */
+            margin-bottom: 20px; /* Add spacing between sections */
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Data</h1>
+    <h2>Total Employees: {{ employee_count['numberOfEmployees'] }}</h2>
+
+    <div>
+        <h2>Gender Distribution</h2>
+        <canvas id="genderChart" class="chart"></canvas>
+    </div>
+    <div>
+        <h2>Race Distribution</h2>
+        <canvas id="raceChart" class="chart"></canvas>
+    </div>
+    <div>
+        <h2>Nationality Distribution</h2>
+        <canvas id="nationalityChart" class="chart"></canvas>
+    </div>
+<h2>Detailed Demographics</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Gender</th>
+            <th>Race</th>
+            <th>Nationality</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for demo in demographics %}
+        <tr>
+            <td>{{ demo['employeeGender'] }}</td>
+            <td>{{ demo['employeeRace'] }}</td>
+            <td>{{ demo['employeeNationality'] }}</td>
+            <td>{{ demo['age'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Monthly Salaries</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Monthly Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for salary in monthly_salaries %}
+        <tr>
+            <td>{{ salary['employeeName'] }}</td>
+            <td>${{ salary['monthSalary'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    <h2>Average Monthly Salary: ${{ average_salary['averageMonthSalary'] }}</h2>
+
+    <script>
+        // Gender Distribution Chart
+        var genderCtx = document.getElementById('genderChart').getContext('2d');
+        new Chart(genderCtx, {
+            type: 'pie',
+            data: {
+                labels: {{ gender_data|map(attribute='employeeGender')|list|tojson }},
+                datasets: [{
+                    data: {{ gender_data|map(attribute='count')|list|tojson }},
+                    backgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
+
+        // Race Distribution Chart
+        var raceCtx = document.getElementById('raceChart').getContext('2d');
+        new Chart(raceCtx, {
+            type: 'pie',
+            data: {
+                labels: {{ race_data|map(attribute='employeeRace')|list|tojson }},
+                datasets: [{
+                    data: {{ race_data|map(attribute='count')|list|tojson }},
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
+
+        // Nationality Distribution Chart
+        var nationalityCtx = document.getElementById('nationalityChart').getContext('2d');
+        new Chart(nationalityCtx, {
+            type: 'pie',
+            data: {
+                labels: {{ nationality_data|map(attribute='employeeNationality')|list|tojson }},
+                datasets: [{
+                    data: {{ nationality_data|map(attribute='count')|list|tojson }},
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+                        '#C9CBCF', '#CDDC39', '#00BCD4', '#E91E63', '#F44336', '#9C27B0'
+                    ]
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
+    </script>
+</body>
+</html>
+
+{% endblock %}

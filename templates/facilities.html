@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block container %}
+
+
+<h2>OUR FACILITIES:</h2>
+<table>
+    <tr>
+        <th>Facility Name</th>
+        <th>Number</th>
+    </tr>
+    {% for row in query1 %}
+    <tr>
+        {% for field in row %}
+        <td>{{ field }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>FACILITIES THAT NEED IMMEDIATE UPGRADE (ORDERED BY LONGEST DAY SINCE UPGRADE):</h2>
+<table>
+    <tr>
+        <th>Facility Name</th>
+        <th>Days Since Upgrade</th>
+    </tr>
+    {% for row in query2 %}
+    <tr>
+        {% for field in row %}
+        <td>{{ field }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>OLDEST FACILITIES SINCE CONSTRUCTION:</h2>
+<table>
+    <tr>
+        <th>Facility Name</th>
+        <th>Built On</th>
+    </tr>
+    {% for row in query3 %}
+    <tr>
+        {% for field in row %}
+        <td>{{ field }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+

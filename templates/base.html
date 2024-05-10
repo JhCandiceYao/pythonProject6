@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Last Resort Hotel</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <img src="{{ url_for('static', filename='images/hotel.webp') }}" alt="Logo" width="300" height="300">
+        <h1>The Last Resort Hotel Data Retrieval</h1>
+        <p>
+          <a href="{{ url_for('home')}}">Home</a> |
+          <a href="{{ url_for('employees')}}">Human Resources</a> |
+          <a href="{{ url_for('customers')}}">Customers</a> |
+          <a href="{{ url_for('facilities')}}">Facilities</a>
+        </p>
+      </header>
+      <main>{% block container %} {% endblock %}</main>
+      <footer>
+        <!-- Insert footer -->
+        <p>
+        @Last Resort Hotel 2024. Data is stored in MySQL.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
